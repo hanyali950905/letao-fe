@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--localStorage中能存什么======json=======两种形式"["a","b"]","{"a":"b"}"-->
+<script>
+//    //设置本地存储
+//    var cc=["a","b"];
+//    localStorage.setItem("a",cc);//参数1----key键，参数2---value值
+//
+//    //获取本地存储-------字符串
+//    var abc=localStorage.getItem("a");
+//    console.log(abc);//a,b
+//    console.log(typeof abc);//string
+
+
+
+
+
+//
+//    //设置本地存储
+//    var cc='["a","b"]';
+//    localStorage.setItem("a",cc);//参数1----key键，参数2---value值
+
+//    //获取本地存储-------字符串
+//    var abc=localStorage.getItem("a");
+//    console.log(abc);//["a","b"]--------!!!!好操作，好控制
+//    console.log(JSON.parse(abc));//数组对象
+//    //(2) ["a", "b"]
+//    // 0: "a"
+//    // 1: "b"
+//    // length: 2
+//    // __proto__: Array(0)
+//    console.log(typeof abc);//string
+
+
+
+
+
+
+    var data={
+        name:"zs",
+        age:20
+    };
+    localStorage.setItem("data",data);
+//    localStorage.setItem("data",JSON.stringify(data));//----json字符串
+//    var obj=localStorage.getItem("data");
+//    console.log(obj);//{"name":"zs","age":20}
+//    console.log(JSON.parse(obj));//Object {name: "zs", age: 20}-----把json字符串转成json对象
+
+    //localStorage中只存储{"a":"b"},["a","b"]这两种形式，所以data对象进行存储时必须转成json字符串进行存储，
+    //当获取本地存储的数据时，再将json字符串转成json对象使用（json对象好控制，使用方便）
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>add-address</title>
+    <link rel="stylesheet" href="css/formalize.css">
+    <link rel="stylesheet" href="css/mui.picker.css">
+    <link rel="stylesheet" href="css/mui.poppicker.css">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/add-address.css">
+    <link rel="stylesheet" href="css/三级联动.css">
+</head>
+<body>
+
+<header class="mui-bar mui-bar-nav header">
+    <div class="mui-input-row mui-password">
+        <a class="fa fa-arrow-left"></a>
+        <h3>添加收货地址</h3>
+    </div>
+</header>
+<nav class="mui-bar mui-bar-tab">
+    <a class="mui-item mui-active" href="letao.html">
+        <span class="fa fa-home"></span>
+        <span class="mui-tab-label">首页</span>
+    </a>
+    <a class="mui-item" href="sort.html">
+        <span class="fa fa-bars"></span>
+        <span class="mui-tab-label">分类</span>
+    </a>
+    <a class="mui-item" href="cart.html">
+        <span class="fa fa-shopping-cart"></span>
+        <span class="mui-tab-label">购物车</span>
+    </a>
+    <a class="mui-item" href="VIP-center.html">
+        <span class="fa fa-user"></span>
+        <span class="mui-tab-label">会员中心</span>
+    </a>
+</nav>
+
+
+<!--<div class="mui-input-row mui-password">-->
+<!--<input type="text" class="mui-input-password text" data-input-password="3" value="收货人">-->
+
+<!--</div>-->
+
+<div class="mui-input-row mui-password">
+    <input type="text" class="text mui-input-password" data-input-password="3" placeholder="收货人" ">
+</div>
+
+<div class="mui-input-row mui-password">
+    <input type="text" class="mui-input-password" data-input-password="3" placeholder="邮编">
+</div>
+
+<div class="mui-input-row mui-password">
+    <a href="#"> <input type="text" class="mui-input-password" data-input-password="3"
+                                    placeholder="省市区"></a>
+</div>
+
+
+<div class="mui-6">
+    <textarea name="" id="" cols="5" rows="5" placeholder="详细地址"></textarea>
+</div>
+
+<div class="mui-5">
+    <input type="submit" value="确认">
+</div>
+
+
+<div class="mui-content-padded">
+    <button id="showUserPicker" class="mui-btn mui-btn-block" type="button" style="display:none">一级选择示例 ...</button>
+
+    <button id="showCityPicker" class="mui-btn mui-btn-block" type="button" style="display:none">二级联动示例 ...</button>
+
+    <button id="showCityPicker3" class="mui-btn mui-btn-block" type="button">三级联动示例 ...</button>
+    <div id="cityResult3" class="ui-alert"></div>
+</div>
+
+
+
+<script src="js/zepto.min.js"></script>
+<script src="js/template-native.js"></script>
+<script src="js/common.js"></script>
+<script src="js/addressManage.js"></script>
+<script src="js/mui.picker.js"></script>
+<script src="js/mui.poppicker.js"></script>
+<script src="js/city.js"></script>
+
+
+
+
+<script>
+    (function($, doc) {
+        $.init();
+        $.ready(function() {
+            /**
+             * 获取对象属性的值
+             * 主要用于过滤三级联动中，可能出现的最低级的数据不存在的情况，实际开发中需要注意这一点；
+             * @param {Object} obj 对象
+             * @param {String} param 属性名
+             */
+            var _getParam = function(obj, param) {
+                return obj[param] || '';
+            };
+            //普通示例
+            var userPicker = new $.PopPicker();
+            userPicker.setData([{
+                value: 'ywj',
+                text: '董事长 叶文洁'
+            }, {
+                value: 'aaa',
+                text: '总经理 艾AA'
+            }, {
+                value: 'lj',
+                text: '罗辑'
+            }, {
+                value: 'ymt',
+                text: '云天明'
+            }, {
+                value: 'shq',
+                text: '史强'
+            }, {
+                value: 'zhbh',
+                text: '章北海'
+            }, {
+                value: 'zhy',
+                text: '庄颜'
+            }, {
+                value: 'gyf',
+                text: '关一帆'
+            }, {
+                value: 'zhz',
+                text: '智子'
+            }, {
+                value: 'gezh',
+                text: '歌者'
+            }]);
+            var showUserPickerButton = doc.getElementById('showUserPicker');
+            var userResult = doc.getElementById('userResult');
+            showUserPickerButton.addEventListener('tap', function(event) {
+                userPicker.show(function(items) {
+                    userResult.innerText = JSON.stringify(items[0]);
+                    //返回 false 可以阻止选择框的关闭
+                    //return false;
+                });
+            }, false);
+            //-----------------------------------------
+            //级联示例
+            var cityPicker = new $.PopPicker({
+                layer: 2
+            });
+            cityPicker.setData(cityData);
+            var showCityPickerButton = doc.getElementById('showCityPicker');
+            var cityResult = doc.getElementById('cityResult');
+            showCityPickerButton.addEventListener('tap', function(event) {
+                cityPicker.show(function(items) {
+                    cityResult.innerText = "你选择的城市是:" + items[0].text + " " + items[1].text;
+                    //返回 false 可以阻止选择框的关闭
+                    //return false;
+                });
+            }, false);
+            //-----------------------------------------
+            //					//级联示例
+            var cityPicker3 = new $.PopPicker({
+                layer: 3
+            });
+            cityPicker3.setData(cityData3);
+            var showCityPickerButton = doc.getElementById('showCityPicker3');
+            var cityResult3 = doc.getElementById('cityResult3');
+            showCityPickerButton.addEventListener('tap', function(event) {
+                cityPicker3.show(function(items) {
+                    cityResult3.innerText = "你选择的城市是:" + _getParam(items[0], 'text') + " " + _getParam(items[1], 'text') + " " + _getParam(items[2], 'text');
+                    //返回 false 可以阻止选择框的关闭
+                    //return false;
+                });
+            }, false);
+        });
+    })(mui, document);
+</script>
+
+<script src="js/href.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="js/mui.min.js"></script>
+<script src="js/letao.js"></script>
+</body>
+</html>
